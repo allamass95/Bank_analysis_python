@@ -1,53 +1,41 @@
 import os
 import csv
 
-votes_cast=[]
-county=[]
-candidates=[]
-names=['Khan:','Correy:','Li:',"O'Tooley:"]
+num_months=[]
+total_amount=[]
+average_list=[]
 
-csvpath=os.path.join('..','..','RICEHOU201906DATA1','HW','03-Python','Instructions','Pypoll','Resources','election_data.csv')
-                    
-with open(csvpath,newline='') as csvfile:
-    csvreader=csv.reader(csvfile,delimiter=',')
+csvpath=os.path.join('..','..','RICEHOU201906DATA1','HW','03-Python','Instructions','PyBank','Resources','budget_data.csv')
 
-    for rows in csvreader:
-        votes_cast.append(rows[0])
-        county.append(rows[1])
-        candidates.append(rows[2])
+with open(csvpath,newline='')as csvfile:
+    csvreader=csv.reader(csvfile,delimiter=",")
 
-    print('Election Results')
-    print('--------------------------')
-    print('Total Votes: '+str(len(votes_cast[1:])))
-    print('--------------------------')
-    
-    khan_votes=candidates.count('Khan')
-    correy_votes=candidates.count('Correy')
-    li_votes=candidates.count('Li')
-    otooley_votes=candidates.count("O'Tooley")
-    
-    khan_average =(khan_votes/(correy_votes+li_votes+otooley_votes+khan_votes)*100)
-    correy_average=(correy_votes/(khan_votes+correy_votes+li_votes+otooley_votes)*100)
-    li_average=(li_votes/(khan_votes+correy_votes+li_votes+otooley_votes)*100)
-    otooley_average=(otooley_votes/(khan_votes+correy_votes+li_votes+otooley_votes)*100)
-
-    khan_average_decimal=round(khan_average,4)
-    correy_average_decimal=round(correy_average,4)
-    li_average_decimal=round(li_average,4)
-    otooley_votes_decimal=round(otooley_average,4)
-
-    print(names[0]+' '+ str(khan_average_decimal)+'%'+' '+'('+str(khan_votes)+")")
-    print(names[1]+' '+ str(correy_average_decimal)+'%'+" "+'('+ str(correy_votes)+")")
-    print(names[2]+' '+ str(li_average_decimal)+'%'+' '+'('+ str(li_votes)+')')
-    print(names[3]+' '+ str(otooley_votes_decimal)+'%'+" "+"("+ str(otooley_votes)+')')
-
-    print('--------------------------')
-
-    winner = {'Khan':khan_votes,"Correy":correy_votes,'Li':li_votes,"O'Tooley":otooley_votes}
-
-    print('Winner: '+str(max(winner, key=winner.get)))
-
-    print('--------------------------')
-
+    for row in csvreader:
         
-  
+        num_months.append(row[0])
+        total_amount.append(row[1])
+   
+    print('Financial Analysis')  
+    print('------------------------')  
+    print('Number of Months:' + str(len(num_months[1:])))
+
+    for row_two in range(1,len(total_amount)):
+        total_amount[row_two] = int(total_amount[row_two])
+        int_list=total_amount[1:]
+    print('Total:$'+str(sum(total_amount[1:])))
+
+    for average in range(1,len(int_list)):
+        individual_averages=(int_list[average]-int_list[average-1])
+        average_list.append(individual_averages)
+
+    average_change=(sum(average_list)/(len(average_list)))
+    average_change_final=round(average_change,2)
+    print('Average Change:$'+ str(average_change_final))
+
+    max_average=max(average_list)
+    min_average=min(average_list)
+
+    print('Greatest increase in profits: '+ num_months[26] +" "+"$"+str(max(average_list)))
+    print('Greatest decrease in profits: '+ num_months[45]+" "+"$"+str(min(average_list)))
+
+   
